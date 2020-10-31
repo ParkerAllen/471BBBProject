@@ -1,4 +1,3 @@
-
 <!-- Figure 2: Search Screen by Alexander -->
 <html>
 <head>
@@ -29,7 +28,7 @@
 			<td>Category: </td>
 				<td><select name="category">
 						<option value='all' selected='selected'>All Categories</option>
-						<option value='1'>Fantasy</option><option value='2'>Adventure</option><option value='3'>Fiction</option><option value='4'>Horror</option>				</select></td>
+						<option value='Fantasy'>Fantasy</option><option value='Adventure'>Adventure</option><option value='Fiction'>Fiction</option><option value='Horror'>Horror</option>				</select></td>
 				</form>
 	<form action="index.php" method="post">	
 				<td><input type="submit" name="exit" value="EXIT 3-B.com" /></td>
