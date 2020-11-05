@@ -8,7 +8,7 @@
 		{
 			//search in
 			$si = strtolower($si);
-			if ($si == 'keyword anywhere')
+			if ($si == 'anywhere')
 			{
 				$rtn = $rtn . search_for("title", $sf) . "OR ";
 				$rtn = $rtn . search_for("author", $sf) . "OR ";
@@ -41,7 +41,7 @@
 		
 		foreach ($sfArray as $key)
 		{
-			return $str . " like %" . $key . "% ";
+			return $str . " like \"%" . $key . "%\" ";
 		}
 	}
 ?>
