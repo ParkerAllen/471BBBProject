@@ -20,6 +20,26 @@ CREATE TABLE reviews(
 	 PRIMARY KEY (text, isbn)
 );
 
+Create Table Orders(
+	order_No int PRIMARY KEY,
+	order_day int,
+	order_month int,
+	order_year int,
+	order_total double
+);
+
+Create Table Customer(
+	username varchar(30),
+	pin int,
+	PRIMARY KEY (username, pin)
+);
+
+CREATE TABLE BBB_admin(
+	admin_name varchar(30),
+	pin int,
+	PRIMARY KEY (admin_name, pin)
+);
+
 INSERT INTO category
 VALUES ('Fantasy');
 
@@ -43,3 +63,21 @@ VALUES ('it was good?', '123454');
 
 INSERT INTO reviews
 VALUES ('meh', '123454');
+
+Insert Into Orders
+Values (0, 23, 11, 2020, 42.14);
+
+Insert Into Orders
+Values (1, 11, 11, 2020, 2.35);
+
+Insert Into Orders
+Values (2, 23, 05, 2020, 42.14);
+
+Insert Into Customer
+VALUES ('bob', 0);
+
+Insert Into Customer
+VALUES ('davey', 2);
+
+Insert Into BBB_admin
+VALUES ('admin', 1234);

@@ -1,4 +1,24 @@
-
+<?php
+	include_once 'dbhinc.php';
+	
+	if(isset($_POST["login"])){
+		$name = $_POST['adminname'];
+		$pin = $_POST['pin'];
+		
+		if($name != "" && $pin != "")
+		{
+			$sql = "Select count(*) From BBB_admin Where admin_name like '{$name}' and pin = {$pin};";
+			$result = mysqli_query($conn, $sql);
+			$row = mysqli_fetch_array($result);
+			
+			if($row[0] > 0)
+			{
+				header("Location:admin_tasks.php");
+				exit();
+			}
+		}
+	}
+?>
 <!DOCTYPE HTML>
 <head>
 <title>Admin Login</title>
@@ -6,7 +26,7 @@
 
 <body>
 <table align="center" style="border:2px solid blue;">
-		<form action="admin_tasks.php" method="post" id="adminlogin_screen">
+		<form action="" method="post" id="adminlogin_screen">
 		<tr>
 			<td align="right">
 				Adminname<span style="color:red">*</span>:
@@ -34,7 +54,5 @@
 		</tr>
 	</table>
 </body>
-
-
 
 </html>

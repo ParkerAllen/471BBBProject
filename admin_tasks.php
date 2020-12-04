@@ -1,4 +1,30 @@
-
+<?php
+	include_once 'dbhinc.php';
+	$sqlTotalUser = "Select count(*) From Customer;";
+	$sqlTotalBookCat = "Select cat_name, count(isbn)
+							From books natural join category
+							Group By cat_name
+							Order BY count(isbn) DESC;";
+	$sqlMonthlySale = "Select order_month, avg(order_total)
+						From Orders
+						Where order_year = 2020
+						Group By order_month;";
+	$sqlBookReview = "Select title, count(*)
+						From books natural Right Outer Join reviews
+						Group By isbn;";
+						
+	$totalUsers = mysqli_query($conn, $sqlTotalUser);
+	$checkTU = mysqli_num_rows($totalUsers);
+	
+	$totalBookCat = mysqli_query($conn, $sqlTotalBookCat);
+	$checkBC = mysqli_num_rows($totalBookCat);
+	
+	$monthlySales = mysqli_query($conn, $sqlMonthlySale);
+	$checkMS = mysqli_num_rows($monthlySales);
+	
+	$bookTitles = mysqli_query($conn, $sqlBookReview);
+	$checkBT = mysqli_num_rows($bookTitles);
+?>
 <!DOCTYPE HTML>
 <head>
 	<title>ADMIN TASKS</title>
@@ -44,6 +70,43 @@
 			</form>
 		</tr>
 	</table>
+	
+	
+	<?php
+		if($checkTU > 0)
+		{
+			$row = mysqli_fetch_array($totalUsers);
+			echo "Members: " . $row[0] . "<br>
+						<p>_______________________________________________</p> <br>";
+		}
+		
+		if($checkBC > 0)
+		{
+			while ($row = mysqli_fetch_array($totalBookCat))
+			{
+				echo "{$row[0]}: {$row[1]}<br>";
+			}
+			echo "<p>_______________________________________________</p> <br>";
+		}
+		
+		if($checkMS > 0)
+		{
+			while ($row = mysqli_fetch_array($monthlySales))
+			{
+				echo "{$row[0]}: \${$row[1]}<br>";
+			}
+			echo "<p>_______________________________________________</p> <br>";
+		}
+		
+		if($checkBT > 0)
+		{
+			while ($row = mysqli_fetch_array($bookTitles))
+			{
+				echo "{$row[0]}: {$row[1]} Reviews<br>";
+			}
+			echo "<p>_______________________________________________</p> <br>";
+		}
+	?>
 </body>
 
 
