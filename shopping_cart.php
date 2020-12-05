@@ -1,3 +1,12 @@
+<?php
+	include_once 'dbhinc.php';
+	$sql_u = "SELECT * FROM customer_reg WHERE status=1 ";
+	$cust = 0;//mysqli_query($conn, $sql_u);
+	
+	$s = "Select isbn, title, author, publisher, count(isbn), price FROM shopping_cart Natural Join books WHERE id = {$cust};";
+	$results = mysqli_query($conn, $s);
+	$resultCheck = mysqli_num_rows($results);
+?>
 
 <!DOCTYPE HTML>
 <head>
@@ -34,7 +43,21 @@
 				<div id="bookdetails" style="overflow:scroll;height:180px;width:400px;border:1px solid black;">
 					<table align="center" BORDER="2" CELLPADDING="2" CELLSPACING="2" WIDTH="100%">
 						<th width='10%'>Remove</th><th width='60%'>Book Description</th><th width='10%'>Qty</th><th width='10%'>Price</th>
-						<tr><td><button name='delete' id='delete' onClick='del("123441");return false;'>Delete Item</button></td><td>iuhdf</br><b>By</b> Avi Silberschatz</br><b>Publisher:</b> McGraw-Hill</td><td><input id='txt123441' name='txt123441' value='1' size='1' /></td><td>12.99</td></tr>					</table>
+						
+						<?php
+							if($resultCheck > 0)
+							{
+								while ($row = mysqli_fetch_assoc($results))
+								{
+									echo "
+										<tr><td><button name='delete' id='delete' onClick='del(\"". $row['isbn'] . "\");return false;'>Delete Item</button></td>
+										<td>{$row['title']}</br><b>By</b> {$row['author']}</br><b>Publisher:</b> {$row['publisher']}</td>
+										<td><input id='txt123441' name='txt123441' value='2' size='1' /></td><td>{$row['price']}</td></tr>
+										";
+								}
+							}
+						?>
+					</table>
 				</div>
 			</td>
 		</tr>

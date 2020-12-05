@@ -2,6 +2,20 @@
 <?php
 	include_once 'dbhinc.php';
 	include_once 'search_book.php';
+	include_once 'ShoppingList.php';
+	
+	if(isset($_GET['cartisbn']))
+	{
+		$book = $_GET['cartisbn'];
+		$sql_u = 0;//"SELECT * FROM customer_reg WHERE status=1 ";
+		$cust = mysqli_query($conn, $sql_u);
+		
+		$sql_in = "Insert Into shopping_cart(id, isbn) Values ( '{$cust}', '{$book}');";
+		mysqli_query($conn, $sql_in);
+		
+		$s = "Select * From shopping_cart;";
+		$r = mysqli_query($conn, $s);
+	}
 	
 	$sql = get_sql($_GET['searchfor'], $_GET['searchon'][0], $_GET['category']);
 	
@@ -52,7 +66,7 @@
 						{
 							echo "
 								<tr>
-								<td align='left'><button name='btnCart' id='btnCart' onClick='cart(\"" . $row['isbn'] . "\", '', \"Array\", \"all\")'>Add to Cart</button></td>
+								<td align='left'><button name='btnCart' id='btnCart' onClick='cart( \"" . $row['isbn'] . "\", \"\", \"Array\", \"all\")'>Add to Cart</button></td>
 								<td rowspan='2' align='left'> {$row['title']} </br>By {$row['author']}</br><b>Publisher:</b> {$row['publisher']},</br><b>ISBN:</b> {$row['isbn']}</t> <b>Price:</b> {$row['price']}</td>
 								
 								</tr>

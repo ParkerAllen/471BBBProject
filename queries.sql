@@ -28,16 +28,26 @@ Create Table Orders(
 	order_total double
 );
 
-Create Table Customer(
-	username varchar(30),
-	pin int,
-	PRIMARY KEY (username, pin)
-);
-
 CREATE TABLE BBB_admin(
 	admin_name varchar(30),
 	pin int,
 	PRIMARY KEY (admin_name, pin)
+);
+
+Create Table customer_reg(
+	id int,
+	username varchar(30),
+	pin int,
+	PRIMARY KEY (id)
+);
+
+Create Table shopping_cart(
+	counter int AUTO_INCREMENT,
+	id int,
+	isbn varchar(16),
+	FOREIGN KEY (id) REFERENCES customer_reg(id),
+	FOREIGN KEY (isbn) REFERENCES books(isbn),
+	PRIMARY KEY (counter, id, isbn)
 );
 
 INSERT INTO category
@@ -73,11 +83,11 @@ Values (1, 11, 11, 2020, 2.35);
 Insert Into Orders
 Values (2, 23, 05, 2020, 42.14);
 
-Insert Into Customer
-VALUES ('bob', 0);
+Insert Into customer_reg
+VALUES (0, 'bob', 0);
 
-Insert Into Customer
-VALUES ('davey', 2);
+Insert Into customer_reg
+VALUES (1, 'davey', 2);
 
 Insert Into BBB_admin
 VALUES ('admin', 1234);
