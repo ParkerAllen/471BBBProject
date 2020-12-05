@@ -3,9 +3,19 @@
 	$sql_u = "SELECT * FROM customer_reg WHERE status=1 ";
 	$cust = 0;//mysqli_query($conn, $sql_u);
 	
-	$s = "Select isbn, title, author, publisher, count(isbn), price FROM shopping_cart Natural Join books WHERE id = {$cust};";
+	if(isset($_GET['delIsbn']))
+	{
+		$book = $_GET['delIsbn'];
+		
+		$sql_in = "Delete From shopping_cart where isbn like {$book} and id = {$cust};";
+		mysqli_query($conn, $sql_in);
+	}
+	
+	$s = "Select count(isbn), isbn, title, author, publisher, price FROM shopping_cart Natural Join books WHERE id = {$cust};";
 	$results = mysqli_query($conn, $s);
 	$resultCheck = mysqli_num_rows($results);
+	
+	$totalPrice = 0;
 ?>
 
 <!DOCTYPE HTML>
@@ -52,8 +62,9 @@
 									echo "
 										<tr><td><button name='delete' id='delete' onClick='del(\"". $row['isbn'] . "\");return false;'>Delete Item</button></td>
 										<td>{$row['title']}</br><b>By</b> {$row['author']}</br><b>Publisher:</b> {$row['publisher']}</td>
-										<td><input id='txt123441' name='txt123441' value='2' size='1' /></td><td>{$row['price']}</td></tr>
+										<td><input id='txt123441' name='txt123441' value='{$row['count(isbn)']}' size='1' /></td><td>{$row['price']}</td></tr>
 										";
+									$totalPrice = $totalPrice + $row['price'] * $row['count(isbn)'];
 								}
 							}
 						?>
@@ -70,7 +81,7 @@
 				&nbsp;
 			</td>
 			<td align="center">			
-				Subtotal:  $12.99			</td>
+				Subtotal:  <?php echo $totalPrice; ?>		</td>
 		</tr>
 	</table>
 </body>

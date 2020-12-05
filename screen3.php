@@ -2,7 +2,6 @@
 <?php
 	include_once 'dbhinc.php';
 	include_once 'search_book.php';
-	include_once 'ShoppingList.php';
 	
 	if(isset($_GET['cartisbn']))
 	{
